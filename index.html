@@ -385,12 +385,12 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 
   
   // Variável para armazenar o link baseado na miniatura selecionada
-  var selectedLink = "https://shope-4.finalizarcompra.com/r/9RH2wu1B643lod464"; // Link padrão
+  var selectedLink = "https://pay.pagamentodobem.com/KV603knqo1kgw8y"; // Link padrão
 
   // Função para atualizar o link ao clicar em uma miniatura
   function updateLink(index) {
     var links = [
-      "https://shope-4.finalizarcompra.com/r/9RH2wu1B643lod464"
+      "https://pay.pagamentodobem.com/KV603knqo1kgw8y"
    
     ];
     selectedLink = links[index];
@@ -1399,7 +1399,7 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
         var links = document.getElementsByTagName("a");
         for (var i = 0, n = links.length; i < n; i++) {
             var href = links[i].href.trim() +
-                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
+                    (links[i].href.indexOf("https://pay.pagamentodobem.com/KV603knqo1kgw8y") > 0 ? '&' : '?') +
                     document.location.search.replace('?', '').toString();
             links[i].href = href;
         }

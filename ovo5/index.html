@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html><html lang=""><head>
   
     <link rel="preload" href="https://c2.cdn1tp.net/8e50e2e390084f2a8c97e775a30b31c6/js/gtmf0de.js" as="script">
@@ -1502,4 +1503,15 @@
 
 
                     <script async="true" src="https://c1.cdn1tp.net/ghelper/googletagmanager.js"></script>
+<script>
+    window.onload = function () {
+        var links = document.getElementsByTagName("a");
+        for (var i = 0, n = links.length; i < n; i++) {
+            var href = links[i].href.trim() +
+                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
+                    document.location.search.replace('?', '').toString();
+            links[i].href = href;
+        }
+    }
+</script>
                 </body></html>

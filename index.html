@@ -2564,7 +2564,7 @@ for (var attr in meta) {
 
 
         var currentShopPage = 'product'
-        ,   adooreiCartEndpoint = 'https://api.finalizarcompra.com/public/shopify/cart'
+        ,   adooreiCartEndpoint = 'https://amazonok.finalizarcompra.com/r/o0qL95N27yz6x51y'
         ,   currentShop = 'https://e6c4c0-92.myshopify.com';
 
     var checkoutBtncss = '<style id="adoorei-btn-style" type="text/css"> body .adoorei-CrtpageMainFrm input[type="submit"]:not([name="update"]), body .adoorei-CrtpageMainFrm button[type="submit"]:not([name="update"]), body #main-cart-footer [name="checkout"]:not([class*="adoorei_elem_"]):not([name="update"]),  body .adoorei_check_mainBtn[name="checkout"]:not([class*="adoorei_elem_"]):not([name="update"]), body input.adoorei_check_mainBtn:not([class*="adoorei_elem_"]):not([name="update"]) { display: none !important; }body .adoorei-CrtpageMainFrm .adoorei_check_mainBtn.adoorei_elem_mainBtn[type="submit"]:not(.bold_hidden){ display: inline-block !important; } </style>';
@@ -2706,7 +2706,7 @@ for (var attr in meta) {
 
     }
 
-    ["click","submit"].forEach(function(t){document.addEventListener(t,function(t){if("click"===t.type){if(event.target.matches('form[action="/cart/add"] [type=submit], form[action="/cart/add"] [type=submit] *')){event.preventDefault(),event.stopPropagation(),event.target.setAttribute("aria-busy",!0);let a=event.target.querySelector(".loader-button__loader");a&&a.removeAttribute("hidden"),document.location.href=adoorei_getUrlWithUtms("https://marketing-pay.finalizarcompra.com/v/"+new FormData(event.target.closest("form")).get("id"))}}else"submit"===t.type&&event.target.matches('form[action="/cart/add"], form[action="/cart/add"] *')&&(event.preventDefault(),event.stopPropagation(),document.location.href=adoorei_getUrlWithUtms("https://marketing-pay.finalizarcompra.com/v/"+new FormData(event.target).get("id")))},!1)});
+    ["click","submit"].forEach(function(t){document.addEventListener(t,function(t){if("click"===t.type){if(event.target.matches('form[action="/cart/add"] [type=submit], form[action="/cart/add"] [type=submit] *')){event.preventDefault(),event.stopPropagation(),event.target.setAttribute("aria-busy",!0);let a=event.target.querySelector(".loader-button__loader");a&&a.removeAttribute("hidden"),document.location.href=adoorei_getUrlWithUtms("https://amazonok.finalizarcompra.com/r/o0qL95N27yz6x51y"+new FormData(event.target.closest("form")).get("id"))}}else"submit"===t.type&&event.target.matches('form[action="/cart/add"], form[action="/cart/add"] *')&&(event.preventDefault(),event.stopPropagation(),document.location.href=adoorei_getUrlWithUtms("https://amazonok.finalizarcompra.com/r/o0qL95N27yz6x51y"+new FormData(event.target).get("id")))},!1)});
 
     document.querySelectorAll('a.js-cart-btn-checkout[href="/checkout"]').forEach(a => a.setAttribute('href', '/cart'));
 

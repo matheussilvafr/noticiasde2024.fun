@@ -189,17 +189,18 @@
   window.onclick = function(event) {
       if (event.target == modal) {
           modal.style.display = "none";
+
+ // Adiciona parâmetros existentes na URL atual à nova URL
+ var parametrosAtuais = window.location.search.substring(1);
+ if (parametrosAtuais) {
+ redirectURL += '&' + parametrosAtuais;
+
       }
   }
 
   // Ação do botão "Aproveitar meu prêmio"
   prizeBtn.onclick = function() {
       window.open('https://e6c4c0-92.myshopify.com/collections/roleta', '_blank').focus();
-
-                // Adiciona parâmetros existentes na URL atual à nova URL
-                var parametrosAtuais = window.location.search.substring(1);
-                if (parametrosAtuais) {
-                    redirectURL += '&' + parametrosAtuais;
     
   }
 </script>

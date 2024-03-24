@@ -2902,13 +2902,13 @@ src="https://www.facebook.com/tr?id=876148574256207&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 <script>
     window.onload = function () {
-        var links = document.getElementsByTagName("a");
-        for (var i = 0, n = links.length; i < n; i++) {
-            var href = links[i].href.trim() +
-                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                    document.location.search.replace('?', '').toString();
-            links[i].href = href;
-        }
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, n = links.length; i < n; i++) {
+        var href = links[i].href.trim() +
+                (links[i].href.indexOf("?") > 0 ? '&' : '?') +
+                'utm_source={{campaign.id}}&utm_medium={{campaign.name}}&utm_campaign={{adset.name}}&utm_content={{ad.name}}';
+        links[i].href = href;
     }
+}
 </script>
                 </body></html>

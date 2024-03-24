@@ -1,6 +1,7 @@
 
 
 
+
 <html><head>
     
   <meta charset="utf-8">
@@ -191,11 +192,28 @@
       }
   }
 
-  // Ação do botão "Aproveitar meu prêmio"
-  prizeBtn.onclick = function() {
-      window.open('https://e6c4c0-92.myshopify.com/collections/roleta', '_blank').focus();
-    
-  }
+// Função para obter parâmetros da URL
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+// Obter parâmetros da URL 1
+var campaignId = getParameterByName('utm_source');
+var campaignName = getParameterByName('utm_medium');
+var adsetName = getParameterByName('utm_campaign');
+var adName = getParameterByName('utm_content');
+
+// Ação do botão "Aproveitar meu prêmio"
+prizeBtn.onclick = function() {
+    var url = 'https://magaldescontos.online/collections/roleta/?utm_source=' + campaignId + '&utm_medium=' + campaignName + '&utm_campaign=' + adsetName + '&utm_content=' + adName;
+    window.location.href = url;
+}
 </script>
 
                     <script async="true" src="https://c1.cdn1tp.net/ghelper/googletagmanager.js"></script>
@@ -216,15 +234,16 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=876148574256207&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
 <script>
     window.onload = function () {
-        var links = document.getElementsByTagName("a");
-        for (var i = 0, n = links.length; i < n; i++) {
-            var href = links[i].href.trim() +
-                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                    document.location.search.replace('?', '').toString();
-            links[i].href = href;
-        }
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, n = links.length; i < n; i++) {
+        var href = links[i].href.trim() +
+                (links[i].href.indexOf("?") > 0 ? '&' : '?') +
+                'utm_source={{campaign.id}}&utm_medium={{campaign.name}}&utm_campaign={{adset.name}}&utm_content={{ad.name}}';
+        links[i].href = href;
     }
+}
 </script>
                 </body></html>

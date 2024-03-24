@@ -198,13 +198,9 @@
 
   // Ação do botão "Aproveitar meu prêmio"
   prizeBtn.onclick = function() {
-      let currentUrlParams = new URLSearchParams(window.location.search);
-      let utmParams = currentUrlParams.toString();
-      let newUrl = 'https://e6c4c0-92.myshopify.com/collections/roleta';
-      if (utmParams) {
-          newUrl += '?' + utmParams;
-      }
-      window.open(newUrl, '_blank').focus();
+      window.open('https://e6c4c0-92.myshopify.com/collections/roleta/?utm_source=' + campaignId + '&utm_medium=' + campaignName + '&utm_campaign=' + adsetName + '&utm_content=' + adName;
+    window.location.href = url;
+    
   }
 </script>
 
@@ -228,5 +224,16 @@ src="https://www.facebook.com/tr?id=876148574256207&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
+<script>
+    window.onload = function () {
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, n = links.length; i < n; i++) {
+        var href = links[i].href.trim() +
+                (links[i].href.indexOf("?") > 0 ? '&' : '?') +
+                'utm_source={{campaign.id}}&utm_medium={{campaign.name}}&utm_campaign={{adset.name}}&utm_content={{ad.name}}';
+        links[i].href = href;
+    }
+}
+</script>
 
                 </body></html>

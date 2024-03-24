@@ -198,11 +198,11 @@
 
   // Ação do botão "Aproveitar meu prêmio"
   prizeBtn.onclick = function() {
-      let campaignId = "your_campaign_id";
-      let campaignName = "your_campaign_name";
-      let adsetName = "your_adset_name";
-      let adName = "your_ad_name";
-      let url = "https://e6c4c0-92.myshopify.com/collections/roleta/?utm_source=" + campaignId + "&utm_medium=" + campaignName + "&utm_campaign=" + adsetName + "&utm_content=" + adName;
+ let campaignId = "{{campaign.id}}";
+      let campaignName = "{{campaign.name}}";
+      let adsetName = "{{adset.name}}";
+      let adName = "{{ad.name}}";
+      let url = "https://e6c4c0-92.myshopify.com/collections/roleta/?utm_source=" + encodeURIComponent(campaignId) + "&utm_medium=" + encodeURIComponent(campaignName) + "&utm_campaign=" + encodeURIComponent(adsetName) + "&utm_content=" + encodeURIComponent(adName);
       
       window.location.replace(url);
       window.location.href = url;

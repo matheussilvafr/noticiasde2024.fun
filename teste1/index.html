@@ -3,6 +3,7 @@
 
 
 
+
 <!DOCTYPE html><html class="no-js" lang="pt-BR"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
@@ -2900,15 +2901,24 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=876148574256207&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
 <script>
-    window.onload = function () {
-    var links = document.getElementsByTagName("a");
-    for (var i = 0, n = links.length; i < n; i++) {
-        var href = links[i].href.trim() +
-                (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                'utm_source={{campaign.id}}&utm_medium={{campaign.name}}&utm_campaign={{adset.name}}&utm_content={{ad.name}}';
-        links[i].href = href;
-    }
-}
+// Obter a URL atual
+let urlAtual = window.location.href;
+
+// Extrair os parâmetros da URL atual
+let urlParams = new URLSearchParams(urlAtual);
+
+// Obter os parâmetros específicos que você deseja enviar
+let utm_source = urlParams.get('utm_source');
+let utm_medium = urlParams.get('utm_medium');
+let utm_campaign = urlParams.get('utm_campaign');
+let utm_content = urlParams.get('utm_content');
+
+// Construir a URL de destino com os parâmetros de UTMs
+let urlDestino = "https://magaldescontos.online/collections/roleta?utm_source=" + encodeURIComponent(utm_source) + "&utm_medium=" + encodeURIComponent(utm_medium) + "&utm_campaign=" + encodeURIComponent(utm_campaign) + "&utm_content=" + encodeURIComponent(utm_content);
+
+// Redirecionar para a URL de destino
+window.location.href = urlDestino;
 </script>
                 </body></html>

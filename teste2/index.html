@@ -3,6 +3,7 @@
 
 
 
+
 <!DOCTYPE html><html class="no-js" lang="pt-BR"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
@@ -2902,22 +2903,39 @@ src="https://www.facebook.com/tr?id=876148574256207&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 
 <script>
-// URL de origem
-var urlOrigem = "https://noticiasde2024.fun/teste2/?utm_source=campaign_id&utm_medium=campaign_name&utm_campaign=adset_name&utm_content=ad_name";
+// Função para obter os parâmetros da URL
+function getUrlParams(url) {
+    var urlParams = {};
+    var queryString = url.split('?')[1];
+    var params = queryString.split('&');
+    
+    for (var i = 0; i < params.length; i++) {
+        var param = params[i].split('=');
+        var key = decodeURIComponent(param[0]);
+        var value = decodeURIComponent(param[1]);
+        urlParams[key] = value;
+    }
+    
+    return urlParams;
+}
 
-// URL de destino
-var urlDestino = "https://noticiasde2024.fun/magal/";
+// Obtém a URL atual
+var currentUrl = window.location.href;
 
-// Extrai os parâmetros da URL de origem
-var urlParams = new URLSearchParams(urlOrigem.split("?")[1]);
+// Obtém os parâmetros UTM da URL
+var utmParams = getUrlParams(currentUrl);
 
-// Adiciona os parâmetros UTM à URL de destino
-urlDestino += "?utm_source=" + urlParams.get("utm_source") +
-              "&utm_medium=" + urlParams.get("utm_medium") +
-              "&utm_campaign=" + urlParams.get("utm_campaign") +
-              "&utm_content=" + urlParams.get("utm_content");
+// Obtém o iframe
+var iframe = document.getElementById('meuIframe');
 
-// Imprime a URL de destino com os parâmetros UTM
-console.log(urlDestino);
+// Constrói a URL para o iframe com os parâmetros UTM
+var iframeUrl = "https://noticiasde2024.fun/teste1/";
+iframeUrl += "?utm_source=" + utmParams["utm_source"] +
+             "&utm_medium=" + utmParams["utm_medium"] +
+             "&utm_campaign=" + utmParams["utm_campaign"] +
+             "&utm_content=" + utmParams["utm_content"];
+
+// Define a URL do iframe
+iframe.src = iframeUrl;
 </script>
                 </body></html>

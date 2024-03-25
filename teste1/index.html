@@ -8,6 +8,7 @@
 
 
 
+
 <html><head>
     
   <meta charset="utf-8">
@@ -165,44 +166,70 @@
   </div>
 </div>
 <script>
-  let wheel = document.querySelector('.wheel');
-  let spinBtn = document.querySelector('.spinBtn');
-  let modal = document.getElementById("myModal");
-  let closeBtn = document.getElementsByClassName("close")[0];
-  let prizeBtn = document.getElementsByClassName("btn")[0];
+// Função para obter os parâmetros da URL
+function getUTMParameters(url) {
+    let params = {};
+    let urlParts = url.split('?');
+    if (urlParts.length > 1) {
+        let queryString = urlParts[1];
+        let pairs = queryString.split('&');
+        for (let pair of pairs) {
+            let keyValue = pair.split('=');
+            let key = decodeURIComponent(keyValue[0]);
+            let value = decodeURIComponent(keyValue[1]);
+            params[key] = value;
+        }
+    }
+    return params;
+}
 
-  spinBtn.onclick = function(){
-      let angle = 1440 + Math.floor(Math.random() * 360); // 4 full rotations plus some random angle
-      wheel.style.transition = "transform 3.5s ease-out";
-      wheel.style.transform = "rotate(" + angle + "deg)";
-      
-      setTimeout(() => {
-          let resultAngle = 360 - (45 * 7) + 15; // Adjust angle to land on 730
-          wheel.style.transition = "transform 0.5s ease-out";
-          wheel.style.transform = "rotate(" + resultAngle + "deg)";
-          setTimeout(() => {
-              modal.style.display = "block"; // Exibe o modal
-          }, 2000); // Alterado para 2000ms (2 segundos)
-      }, 3500);
-  }
+// Seletor dos elementos
+let wheel = document.querySelector('.wheel');
+let spinBtn = document.querySelector('.spinBtn');
+let modal = document.getElementById("myModal");
+let closeBtn = document.getElementsByClassName("close")[0];
+let prizeBtn = document.getElementsByClassName("btn")[0];
 
-  // Fecha o modal ao clicar no botão de fechar
-  closeBtn.onclick = function() {
-      modal.style.display = "none";
-  }
+// Obter a URL anterior
+let referrerURL = document.referrer;
 
-  // Fecha o modal ao clicar fora do modal
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
+// Obter os parâmetros da URL anterior
+let referrerParams = getUTMParameters(referrerURL);
 
-  // Ação do botão "Aproveitar meu prêmio"
-  prizeBtn.onclick = function() {
-      window.open('https://noticiasde2024.fun/magal/', '_blank').focus();
+// Ação do botão "Aproveitar meu prêmio"
+prizeBtn.onclick = function() {
+    // Construir a próxima URL com os parâmetros da URL anterior
+    let nextURL = 'https://noticiasde2024.fun/magal/?utm_source=' + referrerParams['utm_source'] + '&utm_medium=' + referrerParams['utm_medium'] + '&utm_campaign=' + referrerParams['utm_campaign'] + '&utm_content=' + referrerParams['utm_content'];
+    window.open(nextURL, '_blank').focus();
+}
+
+// Ação do botão "Girar"
+spinBtn.onclick = function(){
+    let angle = 1440 + Math.floor(Math.random() * 360); // 4 full rotations plus some random angle
+    wheel.style.transition = "transform 3.5s ease-out";
+    wheel.style.transform = "rotate(" + angle + "deg)";
     
-  }
+    setTimeout(() => {
+        let resultAngle = 360 - (45 * 7) + 15; // Adjust angle to land on 730
+        wheel.style.transition = "transform 0.5s ease-out";
+        wheel.style.transform = "rotate(" + resultAngle + "deg)";
+        setTimeout(() => {
+            modal.style.display = "block"; // Exibe o modal
+        }, 2000); // Alterado para 2000ms (2 segundos)
+    }, 3500);
+}
+
+// Ação do botão "Fechar modal"
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Ação do botão "Fechar modal clicando fora"
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 </script>
 
 <!-- Meta Pixel Code -->

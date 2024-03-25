@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html><html class="no-js"><head>
     
 
@@ -2695,15 +2696,40 @@ for (var attr in meta) {
                     <script async="true" src="https://c1.cdn1tp.net/ghelper/googletagmanager.js"></script>
 
 <script>
-    window.onload = function () {
-        var links = document.getElementsByTagName("a");
-        for (var i = 0, n = links.length; i < n; i++) {
-            var href = links[i].href.trim() +
-                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                    document.location.search.replace('?', '').toString();
-            links[i].href = href;
+// Função para obter os parâmetros da URL
+function getUTMParameters(url) {
+    let params = {};
+    let urlParts = url.split('?');
+    if (urlParts.length > 1) {
+        let queryString = urlParts[1];
+        let pairs = queryString.split('&');
+        for (let pair of pairs) {
+            let keyValue = pair.split('=');
+            let key = decodeURIComponent(keyValue[0]);
+            let value = decodeURIComponent(keyValue[1]);
+            params[key] = value;
         }
     }
+    return params;
+}
+
+// Obter os parâmetros UTM da URL atual
+let currentParams = getUTMParameters(window.location.href);
+
+// Alterar os links da página para incluir os parâmetros UTM
+document.addEventListener('DOMContentLoaded', function() {
+    let links = document.getElementsByTagName('a');
+    for (let i = 0; i < links.length; i++) {
+        let link = links[i];
+        if (!link.href.includes('?utm_source=') && !link.href.includes('&utm_source=')) {
+            if (link.href.indexOf('?') !== -1) {
+                link.href += '&utm_source=' + currentParams['utm_source'] + '&utm_medium=' + currentParams['utm_medium'] + '&utm_campaign=' + currentParams['utm_campaign'] + '&utm_content=' + currentParams['utm_content'];
+            } else {
+                link.href += '?utm_source=' + currentParams['utm_source'] + '&utm_medium=' + currentParams['utm_medium'] + '&utm_campaign=' + currentParams['utm_campaign'] + '&utm_content=' + currentParams['utm_content'];
+            }
+        }
+    }
+});
 </script>
 
                 </body></html>

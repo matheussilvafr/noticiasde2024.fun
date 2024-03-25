@@ -3,6 +3,8 @@
 
 
 
+
+
 <!DOCTYPE html><html class="no-js" lang="pt-BR"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
@@ -2435,7 +2437,7 @@
                             <div class="collection">
                                 <div class="card ">
                                     <hr>
-                                        <iframe src="https://noticiasde2024.fun/roletamag/" width="100%" height="650px" frameborder="0" scrolling="auto"></iframe>
+                                        <iframe src="https://noticiasde2024.fun/teste1/" width="100%" height="650px" frameborder="0" scrolling="auto"></iframe>
                                 </div>
             </div></div></div></div></section>
 
@@ -2457,7 +2459,7 @@
                                 <div class="footer__collapsible-content">
                                     <div class="rte">
                                         <p><strong>SAC (Serviço de Atendimento ao Consumidor)</strong></p>
-                                        <p><strong>E-mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b5d6dadbc1d4c1daf5d8d4d2d4cfdcdbd0d9c0dccfd49bd6dad8">[email&#160;protected]</a></a><br></p>
+                                        <p><strong>E-mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81e2eeeff5e0f5eec1ece0e6e0fbe8efe4edf4e8fbe0afe2eeec">[email&#160;protected]</a></a><br></p>
                                     </div>
                                 </div>
                             </div>
@@ -2900,58 +2902,41 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=876148574256207&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
 <script>
-    window.onload = function () {
-        var links = document.getElementsByTagName("a");
-        for (var i = 0, n = links.length; i < n; i++) {
-            var href = links[i].href.trim() +
-                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                    document.location.search.replace('?', '').toString();
-            links[i].href = href;
-        }
+// Função para obter os parâmetros da URL
+function getUrlParams(url) {
+    var urlParams = {};
+    var queryString = url.split('?')[1];
+    var params = queryString.split('&');
+    
+    for (var i = 0; i < params.length; i++) {
+        var param = params[i].split('=');
+        var key = decodeURIComponent(param[0]);
+        var value = decodeURIComponent(param[1]);
+        urlParams[key] = value;
     }
-</script>
-<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
-
-<script>
-document.addEventListener("contextmenu", function (e){
-    e.preventDefault();
-}, false);
-</script>
-
-<script>
-document.onkeypress = function (event) {
-event = (event  window.event);
-if (event.keyCode == 123) {return false;}
-if (event.keyCode == 93) {return false;}
-if (event.keyCode == 44) {return false;}
+    
+    return urlParams;
 }
-document.onmousedown = function (event) {
-event = (event  window.event);
-if (event.keyCode == 123) {return false;}
-if (event.keyCode == 93) {return false;}
-if (event.keyCode == 44) {return false;}
-}
-document.onkeydown = function (event) {
-event = (event || window.event);
-if (event.keyCode == 123) {return false;}
-if (event.keyCode == 93) {return false;}
-if (event.keyCode == 44) {return false;}
-}
+
+// Obtém a URL atual
+var currentUrl = window.location.href;
+
+// Obtém os parâmetros UTM da URL
+var utmParams = getUrlParams(currentUrl);
+
+// Obtém o iframe
+var iframe = document.getElementById('meuIframe');
+
+// Constrói a URL para o iframe com os parâmetros UTM
+var iframeUrl = "https://noticiasde2024.fun/teste1/";
+iframeUrl += "?utm_source=" + utmParams["utm_source"] +
+             "&utm_medium=" + utmParams["utm_medium"] +
+             "&utm_campaign=" + utmParams["utm_campaign"] +
+             "&utm_content=" + utmParams["utm_content"];
+
+// Define a URL do iframe
+iframe.src = iframeUrl;
 </script>
-
-<script>
-    function redirectToMobile() {
-            var userAgent = navigator.userAgent.toLowerCase();
-    var isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-
-    if (!isMobile) {
-        window.location.href = "https://www.kto.com/pt/cassino/?myafftkn=sFa0u-w5E2jM9pVa8kFgiWNd7ZgqdRLk&partner=AQ0240597007"; // Substitua com a URL desejada para computadores
-            }
-        }
-
-    redirectToMobile();
-</script> 
-
-
                 </body></html>

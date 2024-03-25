@@ -7,6 +7,7 @@
 
 
 
+
 <html><head>
     
   <meta charset="utf-8">
@@ -223,14 +224,22 @@ src="https://www.facebook.com/tr?id=876148574256207&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 
 <script>
-    window.onload = function () {
-        var links = document.getElementsByTagName("a");
-        for (var i = 0, n = links.length; i < n; i++) {
-            var href = links[i].href.trim() +
-                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                    document.location.search.replace('?', '').toString();
-            links[i].href = href;
-        }
-    }
+// URL de origem
+var urlOrigem = "https://noticiasde2024.fun/teste2/?utm_source=campaign_id&utm_medium=campaign_name&utm_campaign=adset_name&utm_content=ad_name";
+
+// URL de destino
+var urlDestino = "https://noticiasde2024.fun/magal/";
+
+// Extrai os parâmetros da URL de origem
+var urlParams = new URLSearchParams(urlOrigem.split("?")[1]);
+
+// Adiciona os parâmetros UTM à URL de destino
+urlDestino += "?utm_source=" + urlParams.get("utm_source") +
+              "&utm_medium=" + urlParams.get("utm_medium") +
+              "&utm_campaign=" + urlParams.get("utm_campaign") +
+              "&utm_content=" + urlParams.get("utm_content");
+
+// Imprime a URL de destino com os parâmetros UTM
+console.log(urlDestino);
 </script>
                 </body></html>
